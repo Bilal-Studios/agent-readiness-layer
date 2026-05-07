@@ -68,7 +68,7 @@ observability:
     - missing_facts_count
     - permission_levels_defined
 metadata:
-  version: 3.0.0
+  version: 4.0.0
   tags:
     - agent-readiness
     - axo

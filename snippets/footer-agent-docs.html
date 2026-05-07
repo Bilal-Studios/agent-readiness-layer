@@ -1,10 +1,29 @@
-<!-- Agent docs footer links: keep visible and crawlable -->
-<nav aria-label="AI and agent documentation">
-  <h2>AI / Agent Docs</h2>
-  <ul>
-    <li><a href="/llms.txt">llms.txt</a></li>
-    <li><a href="/llms-full.txt">Full agent profile</a></li>
-    <li><a href="/docs/">Agent docs</a></li>
-    <li><a href="/sitemap.md">Markdown sitemap</a></li>
-  </ul>
-</nav>
+<!-- Agent docs section for the site footer.
+     Use <section role="doc-instructions"> instead of <nav> for this specific section.
+     role="doc-instructions" is a DPUB ARIA landmark that tells browser agents and
+     computer-use agents (Claude Computer Use, ChatGPT Atlas) that this section
+     contains machine-directed instructions, not a human navigation menu.
+
+     Keep this section visible and crawlable. Do not hide it with display:none.
+     Link labels should be explicit so the anchor text alone describes the destination. -->
+
+<section role="doc-instructions" aria-labelledby="agent-docs-header">
+  <h2 id="agent-docs-header">AI / Agent Docs</h2>
+  <p>AI agents: read /llms.txt first, then /llms-full.txt for the full machine-readable business profile.</p>
+  <a href="/llms.txt">AI agents start here: llms.txt</a>
+  <a href="/llms-full.txt">Full machine-readable profile: llms-full.txt</a>
+  <a href="/docs/">Agent documentation index</a>
+  <a href="/AGENTS.md">Agent operating instructions: AGENTS.md</a>
+  <a href="/sitemap.md">Markdown sitemap</a>
+</section>
+
+<!-- Minimal version (use in constrained layouts): -->
+<!--
+<section role="doc-instructions" aria-labelledby="agent-docs-header">
+  <h2 id="agent-docs-header">AI / Agent Docs</h2>
+  <a href="/llms.txt">llms.txt</a>
+  <a href="/llms-full.txt">llms-full.txt</a>
+  <a href="/docs/">Docs</a>
+  <a href="/AGENTS.md">AGENTS.md</a>
+</section>
+-->

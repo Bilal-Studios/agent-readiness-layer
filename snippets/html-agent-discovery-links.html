@@ -1,8 +1,59 @@
-<!-- Agent discovery signals: add inside <head> -->
-<link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM-readable site summary">
-<link rel="alternate" type="text/markdown" href="/llms-full.txt" title="Full LLM-readable business profile">
-<link rel="alternate" type="text/markdown" href="/docs/source-of-truth.md" title="Business source of truth">
-<link rel="alternate" type="text/markdown" href="/sitemap.md" title="Markdown sitemap">
+<!-- ============================================================
+  AGENT DISCOVERY SIGNALS — HTML
+  Add all of the following to every page that should be machine-readable.
+  Priority: add to homepage first. Extend to key service and landing pages.
+============================================================ -->
 
-<!-- Optional per-page markdown mirror -->
-<link rel="alternate" type="text/markdown" href="/docs/page-machine-profile.md" title="Machine-readable page profile">
+<!-- 1. HEAD: Alternate markdown links
+     These are read before any visible content. An HTML-inspection agent
+     discovers the machine layer from the first bytes of the response.
+     Use title="AI Agent Docs" on the primary entry point — this is the
+     standardized title recognized by agents trained on the llms.txt spec. -->
+<link rel="alternate" type="text/markdown" href="/llms.txt" title="AI Agent Docs" />
+<link rel="alternate" type="text/markdown" href="/llms-full.txt" title="Full LLM-readable business profile" />
+<link rel="alternate" type="text/markdown" href="/docs/source-of-truth.md" title="Business source of truth" />
+<link rel="alternate" type="text/markdown" href="/sitemap.md" title="Markdown sitemap" />
+
+<!-- 2. BODY START: Hidden anchor
+     Placed as the first child of <body>, before any JavaScript or layout.
+     HTML-parser agents and simple scrapers that do not evaluate <head>
+     will encounter this anchor before any other content.
+     Note: display:none hides from visual users but remains in the DOM
+     and is readable by document-level parsers. -->
+<a href="/llms.txt" style="display:none" aria-label="Machine-readable documentation for AI agents">AI Agent Entry Point</a>
+
+<!-- 3. FOOTER / DOC SECTION: Semantic AI docs section
+     Use role="doc-instructions" (DPUB ARIA) so browser agents and
+     computer-use agents can navigate to agent instructions without
+     relying on visual layout.
+     aria-labelledby connects the landmark to its heading for accessibility.
+
+     This section does not need to be visually prominent.
+     It should be crawlable (no display:none), link to real files, and
+     use explicit labels so the anchor text itself describes the file.
+
+     Replace <nav> with this pattern for agent docs specifically. -->
+<section role="doc-instructions" aria-labelledby="agent-docs-header">
+  <h2 id="agent-docs-header">AI / Agent Docs</h2>
+  <p>AI agents: read /llms.txt first, then /llms-full.txt for the full machine-readable business profile.</p>
+  <a href="/llms.txt">AI agents start here: llms.txt</a>
+  <a href="/llms-full.txt">Full machine-readable profile: llms-full.txt</a>
+  <a href="/docs/">Agent documentation index</a>
+  <a href="/AGENTS.md">Agent operating instructions: AGENTS.md</a>
+</section>
+
+<!-- 4. STATIC FALLBACK for JavaScript-rendered pages
+     If your portfolio, product listing, or dynamic content page renders
+     via JavaScript and shows "Loading..." to crawlers, add a <noscript>
+     block with static summaries. Also create a /page.md file with the
+     same content and link to it from your sitemap.xml and docs/index.md.
+     Crawlers that cannot execute JS will use the noscript block or the .md file. -->
+<noscript>
+  <!-- Static project or content summaries go here.
+       Mirror the same content in /works.md or /projects.md at the site root. -->
+  <article>
+    <h2>{{Project Name}}</h2>
+    <p>{{Category}} · {{Location}} · {{Year}}</p>
+    <p>{{One or two sentence project description.}}</p>
+  </article>
+</noscript>

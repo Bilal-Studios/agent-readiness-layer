@@ -1,0 +1,13 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "{{Business Name}}",
+  "name_for_model": "{{business_name_snake_case}}",
+  "description_for_human": "{{One-sentence human description of the business.}}",
+  "description_for_model": "{{Two or three sentence description for agents. Include: what the business does, who it serves, where to find the concise machine-readable summary (/llms.txt), the full business profile (/llms-full.txt), the agent operating instructions (/AGENTS.md), and the documentation index (/docs/).}}",
+  "auth": {
+    "type": "none"
+  },
+  "logo_url": "https://{{domain}}/logo.png",
+  "contact_email": "{{contact@domain}}",
+  "legal_info_url": "https://{{domain}}/terms/"
+}

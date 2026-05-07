@@ -1,10 +1,39 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://{{domain}}/sitemap.xml
 
-# Agent-readable entry points:
-# https://example.com/llms.txt
-# https://example.com/llms-full.txt
-# https://example.com/sitemap.md
-# https://example.com/docs/
+# Link directive: points agents directly to the machine-readable entry point.
+# Not a standard robots.txt field, but recognized by agents trained to look for
+# HTTP Link header patterns. Harmless to standard crawlers.
+Link: <https://{{domain}}/llms.txt>; rel="help"
+
+# AI / Agent docs
+# https://{{domain}}/llms.txt
+# https://{{domain}}/llms-full.txt
+# https://{{domain}}/AGENTS.md
+# https://{{domain}}/docs/
+# https://{{domain}}/sitemap.md
+# https://{{domain}}/.well-known/ai-plugin.json
+
+# AI search engine bots — explicitly allowed
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

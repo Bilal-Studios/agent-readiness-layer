@@ -6,14 +6,21 @@ It helps turn a normal human-facing site into an **agent-operable business surfa
 
 Version 3 adds **Agent Discovery Hardening**: the machine-readable layer is not considered complete until a cold agent can find it without being explicitly told that `/llms.txt`, `/llms-full.txt`, or `/docs/` exist.
 
+Version 4 adds the **Broadcast Protocol**: a standardized set of signals that make the machine layer discoverable through nine independent paths — so any agent, regardless of how it was built, can find it.
+
 ## What This Skill Generates
 
 - LLM-friendly documentation
 - `llms.txt` and `llms-full.txt`
+- `AGENTS.md` — dedicated agent entry point with start-here chain
 - Markdown mirrors and source-of-truth docs
 - Agent discovery and recommendation profiles
-- Agent discovery hardening plans
-- `/docs/` indexes, `/sitemap.md`, robots hints, alternate markdown links, and redirect aliases
+- Agent discovery hardening plans with broadcast signal checklist
+- `/docs/` HTML index (no JavaScript required)
+- `/sitemap.md`, `robots.txt` hints, alternate markdown links, redirect aliases
+- `/.well-known/ai-plugin.json` — cross-platform plugin discovery
+- Content negotiation endpoint for `Accept: text/markdown`
+- Static fallbacks for JavaScript-rendered pages
 - Machine-readable page profiles
 - Schema.org JSON-LD and metadata maps
 - OpenAPI/MCP readiness maps
@@ -58,15 +65,23 @@ The skill uses eight layers:
 7. **Memory** — durable context, brand facts, user preference boundaries, and privacy
 8. **Evaluation** — scenario tests, sandbox tests, hallucination traps, and regression checks
 
-## Discovery Hardening Rule
+## Broadcast Protocol (v4)
 
-A machine-readable layer is incomplete until it is discoverable from at least three independent paths:
+A machine-readable layer is incomplete until it is discoverable from at least **five independent paths**. Target nine.
 
-1. Homepage HTML signals
-2. Sitemap or robots.txt
-3. Visible or crawlable documentation index
+| Signal | Who reads it |
+|--------|-------------|
+| `<link rel="alternate" type="text/markdown" href="/llms.txt" title="AI Agent Docs">` in `<head>` | HTML-inspection agents, head-parsers |
+| Hidden anchor `<a href="/llms.txt" style="display:none">` as first child of `<body>` | Sequential DOM-parsers, scrapers that skip `<head>` |
+| `<section role="doc-instructions" aria-labelledby>` in footer | Browser agents, computer-use agents navigating by ARIA landmarks |
+| `robots.txt` with `Link: </llms.txt>; rel="help"` + AI docs comment block | Crawlers that parse robots.txt for agent hints |
+| `sitemap.xml` with all machine files listed | Agents that start from robots → sitemap |
+| `/.well-known/ai-plugin.json` with `description_for_model` pointing to docs | OpenAI-compatible agents, agents that check `.well-known` |
+| `/docs/` as a no-JavaScript HTML index | Agents following links without JS execution |
+| `/AGENTS.md` with numbered start-here chain | Coding agents, GitHub-pattern agents |
+| `/api/negotiate` with `Accept: text/markdown` → returns `llms.txt` | Agents that use HTTP content negotiation |
 
-For any full implementation, create or recommend `/llms.txt`, `/llms-full.txt`, `/docs/`, `/docs/index.md`, `/sitemap.md`, `sitemap.xml` entries, `robots.txt` hints, homepage `<link rel="alternate" type="text/markdown">` tags, footer links, and redirects for common guesses such as `/llm.txt`, `/ai.txt`, `/agents.txt`, and `/AGENTS.md`.
+Each signal is independent. An agent that misses one can find the machine layer through another.
 
 ## How to Use
 
@@ -81,10 +96,13 @@ For implementation work, generate the requested artifacts using the templates.
 This skill is designed to align with the modern agent infrastructure ecosystem:
 
 - Agent Skills / `SKILL.md` package format
-- `llms.txt`, `llms-full.txt`, markdown mirrors, and `sitemap.md`
+- `llms.txt`, `llms-full.txt`, `AGENTS.md`, markdown mirrors, and `sitemap.md`
 - Schema.org JSON-LD
 - OpenAPI / Swagger tool definitions
 - MCP-style tool/resource/prompt surfaces
+- `.well-known/ai-plugin.json` (OpenAI plugin standard)
+- DPUB ARIA roles for browser-agent navigation
+- HTTP content negotiation (`Accept: text/markdown`)
 - Agent identity, least-privilege scopes, and audit logs
 - Browser-agent and computer-use readiness
 - Sandbox testing and deterministic evals
@@ -96,12 +114,20 @@ This skill is designed to align with the modern agent infrastructure ecosystem:
 /public
   llms.txt
   llms-full.txt
+  AGENTS.md
   sitemap.xml
   sitemap.md
   robots.txt
 
+/.well-known
+  ai-plugin.json
+
+/api
+  negotiate.js          (content negotiation serverless function)
+
 /docs
-  index.md
+  index.html            (no-JS HTML docs index)
+  index.md              (markdown mirror)
   business-profile.md
   source-of-truth.md
   agent-discovery-profile.md
@@ -141,8 +167,6 @@ This skill is designed to align with the modern agent infrastructure ecosystem:
 /metadata
   page-metadata-map.md
   alt-text-map.md
-  homepage-alternate-links.html
-  footer-agent-docs.html
 
 /evals
   agent-readiness-evals.md

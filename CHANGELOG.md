@@ -1,5 +1,38 @@
 # Changelog
 
+## v4 — Broadcast Protocol: Standardized Agentic Web Discovery
+
+### Problem this solves
+
+A site can have perfectly structured llms.txt, permission models, and agent docs — and still fail the cold-agent test because no discovery signal was broadcast. Agents that do not already know the file locations cannot find them. v4 codifies the full broadcast layer.
+
+### Added
+
+- `snippets/html-agent-discovery-links.html` — expanded with all four signal types: head alternate links, hidden body anchor, DPUB ARIA section, noscript static fallback.
+- `snippets/footer-agent-docs.html` — updated to use `<section role="doc-instructions" aria-labelledby>` (DPUB ARIA) instead of `<nav>`.
+- `snippets/robots-agent-hints.txt` — added `Link: </llms.txt>; rel="help"` directive.
+- `snippets/vercel-agent-redirects.json` — added www canonical redirect (has: host condition), Vary: Accept header, content negotiation route, and explanatory comments.
+- `snippets/well-known-ai-plugin.json` — new: cross-platform plugin discovery template for `/.well-known/ai-plugin.json`.
+- `snippets/content-negotiation-api.js` — new: serverless function that returns llms.txt content for `Accept: text/markdown` requests. Includes explanation of why root-path negotiation does not work on static file servers.
+- `snippets/docs-index.html` — new: no-JavaScript HTML docs index template for `/docs/`. Serves as the crawlable documentation entry point when markdown alone is insufficient.
+- `templates/agents-md.md` — new: full AGENTS.md template. Includes numbered start-here chain, rules for agents, routing table, permission level table, content negotiation docs, and discovery chain diagram.
+- `checklists/agent-discovery-hardening.md` — major update: added checks for hidden body anchor, DPUB ARIA role, Link: directive, .well-known/ai-plugin.json, www canonical redirect, content negotiation, Vary: Accept, JS-heavy page fallbacks, static .md mirrors.
+- `templates/agent-discovery-hardening-plan.md` — major update: ten-layer hardening plan with implementation notes, why-this-matters explanations, code samples, and a scored discovery path table.
+
+### Refined
+
+- `<link rel="alternate">` title convention standardized to `"AI Agent Docs"` for the primary entry point.
+- Hidden body anchor documented as a separate signal from head alternate links — positioned as first child of `<body>` so it is read before any JavaScript executes.
+- DPUB ARIA `role="doc-instructions"` documented with rationale: browser agents and computer-use agents navigate by ARIA landmarks; `doc-instructions` is more semantically specific than `nav` for machine-directed content.
+- Content negotiation documented as a server-side concern, not a static file rewrite — with explanation of why Accept-header rewrites do not work on static hosts.
+- Discovery Score introduced: count independent discovery paths, target five or more.
+
+### Why this matters
+
+Agents vary enormously in how they approach a new site. Some read `<head>`. Some follow visible links. Some check `robots.txt` first. Some guess `.well-known`. Some cannot execute JavaScript. A site that broadcasts its machine layer through many independent channels does not depend on any one agent being trained on any one convention. The machine docs become findable to any agent, regardless of how it was built.
+
+---
+
 ## v3 — Agent Discovery Hardening Upgrade
 
 ### Added

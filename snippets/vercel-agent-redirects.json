@@ -1,10 +1,50 @@
 {
+  "rewrites": [
+    { "source": "/go/:slug", "destination": "/api/go?slug=:slug" },
+    { "source": "/projects/:slug", "destination": "/projects/project.html" }
+  ],
+
+  "headers": [
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    }
+  ],
+
   "redirects": [
-    { "source": "/llm.txt", "destination": "/llms.txt", "permanent": true },
-    { "source": "/ai.txt", "destination": "/llms.txt", "permanent": true },
-    { "source": "/agents.txt", "destination": "/llms.txt", "permanent": true },
-    { "source": "/AGENTS.md", "destination": "/docs/", "permanent": true },
-    { "source": "/agent-docs", "destination": "/docs/", "permanent": true },
-    { "source": "/ai-docs", "destination": "/docs/", "permanent": true }
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "{{bare-domain.com}}" }],
+      "destination": "https://www.{{bare-domain.com}}/:path*",
+      "permanent": true
+    },
+    { "source": "/llm.txt",    "destination": "/llms.txt",   "permanent": true },
+    { "source": "/ai.txt",     "destination": "/llms.txt",   "permanent": true },
+    { "source": "/agents.txt", "destination": "/llms.txt",   "permanent": true },
+    { "source": "/AGENTS.txt", "destination": "/AGENTS.md",  "permanent": true },
+    { "source": "/agent-docs", "destination": "/docs/",      "permanent": true },
+    { "source": "/ai-docs",    "destination": "/docs/",      "permanent": true }
   ]
 }
+
+// Notes:
+//
+// www canonical redirect:
+//   The "has" host condition redirects the bare domain to www permanently.
+//   Replace {{bare-domain.com}} with your actual domain (no www prefix).
+//   Remove this redirect if you use the bare domain as canonical.
+//
+// Vary: Accept header:
+//   Tells CDNs and shared caches that the homepage content may vary by
+//   Accept header, enabling future content negotiation without stale responses.
+//
+// Content negotiation (static sites):
+//   Static file servers serve index.html before evaluating Accept headers on /.
+//   Use a serverless function at /api/negotiate instead.
+//   See snippets/content-negotiation-api.js for the implementation.
+//   Document the endpoint in /AGENTS.md.
