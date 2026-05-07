@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    { "source": "/llm.txt", "destination": "/llms.txt", "permanent": true },
+    { "source": "/ai.txt", "destination": "/llms.txt", "permanent": true },
+    { "source": "/agents.txt", "destination": "/llms.txt", "permanent": true },
+    { "source": "/AGENTS.md", "destination": "/docs/", "permanent": true },
+    { "source": "/agent-docs", "destination": "/docs/", "permanent": true },
+    { "source": "/ai-docs", "destination": "/docs/", "permanent": true }
+  ]
+}

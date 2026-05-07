@@ -4,12 +4,16 @@ This package contains a reusable skill for creating an **Agent Readiness Layer**
 
 It helps turn a normal human-facing site into an **agent-operable business surface**: a layer that AI agents can discover, understand, trust, compare, recommend, and use safely.
 
+Version 3 adds **Agent Discovery Hardening**: the machine-readable layer is not considered complete until a cold agent can find it without being explicitly told that `/llms.txt`, `/llms-full.txt`, or `/docs/` exist.
+
 ## What This Skill Generates
 
 - LLM-friendly documentation
 - `llms.txt` and `llms-full.txt`
 - Markdown mirrors and source-of-truth docs
 - Agent discovery and recommendation profiles
+- Agent discovery hardening plans
+- `/docs/` indexes, `/sitemap.md`, robots hints, alternate markdown links, and redirect aliases
 - Machine-readable page profiles
 - Schema.org JSON-LD and metadata maps
 - OpenAPI/MCP readiness maps
@@ -33,6 +37,7 @@ SEO asks: can a search engine rank this?
 AXO asks:
 
 - Can an AI agent discover this business?
+- Can a cold agent find the machine-readable layer without being told the file paths?
 - Can it understand what the business does?
 - Can it compare the offer against alternatives?
 - Can it recommend the correct next step?
@@ -45,13 +50,23 @@ AXO asks:
 The skill uses eight layers:
 
 1. **Eyes** — structure and machine readability
-2. **Discovery** — how agents find, classify, and compare the business
+2. **Discovery** — how agents find, classify, compare, and reach the machine-readable layer
 3. **Context** — source-of-truth docs, markdown mirrors, `llms.txt`, and retrieval surfaces
 4. **Hands** — APIs, forms, tools, MCP servers, and actions
 5. **Permits** — identity, scopes, approvals, safety, and auditability
 6. **Brain** — intent logic, decision rules, conversion routing, and refusal boundaries
 7. **Memory** — durable context, brand facts, user preference boundaries, and privacy
 8. **Evaluation** — scenario tests, sandbox tests, hallucination traps, and regression checks
+
+## Discovery Hardening Rule
+
+A machine-readable layer is incomplete until it is discoverable from at least three independent paths:
+
+1. Homepage HTML signals
+2. Sitemap or robots.txt
+3. Visible or crawlable documentation index
+
+For any full implementation, create or recommend `/llms.txt`, `/llms-full.txt`, `/docs/`, `/docs/index.md`, `/sitemap.md`, `sitemap.xml` entries, `robots.txt` hints, homepage `<link rel="alternate" type="text/markdown">` tags, footer links, and redirects for common guesses such as `/llm.txt`, `/ai.txt`, `/agents.txt`, and `/AGENTS.md`.
 
 ## How to Use
 
@@ -66,7 +81,7 @@ For implementation work, generate the requested artifacts using the templates.
 This skill is designed to align with the modern agent infrastructure ecosystem:
 
 - Agent Skills / `SKILL.md` package format
-- `llms.txt` and markdown website mirrors
+- `llms.txt`, `llms-full.txt`, markdown mirrors, and `sitemap.md`
 - Schema.org JSON-LD
 - OpenAPI / Swagger tool definitions
 - MCP-style tool/resource/prompt surfaces
@@ -82,13 +97,17 @@ This skill is designed to align with the modern agent infrastructure ecosystem:
   llms.txt
   llms-full.txt
   sitemap.xml
+  sitemap.md
   robots.txt
 
 /docs
+  index.md
   business-profile.md
   source-of-truth.md
   agent-discovery-profile.md
   agent-journey-map.md
+  agent-discovery-hardening-plan.md
+  context-retrieval-map.md
   services.md
   pricing.md
   locations.md
@@ -99,10 +118,12 @@ This skill is designed to align with the modern agent infrastructure ecosystem:
   conversion-rules.md
   agent-behavior-rules.md
   permission-model.md
+  agent-identity-model.md
   memory-policy.md
   tool-readiness-map.md
   mcp-readiness-map.md
   openapi-action-definitions.md
+  browser-agent-readiness.md
   agent-action-matrix.md
   observability-audit-plan.md
   evaluation-plan.md
@@ -120,10 +141,13 @@ This skill is designed to align with the modern agent infrastructure ecosystem:
 /metadata
   page-metadata-map.md
   alt-text-map.md
+  homepage-alternate-links.html
+  footer-agent-docs.html
 
 /evals
   agent-readiness-evals.md
   sandbox-scenarios.md
+  cold-agent-crawl.md
 
 README.md
 ```

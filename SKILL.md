@@ -11,6 +11,7 @@ It is **AXO: Agent Experience Optimization**.
 AXO answers:
 
 - Can an AI agent discover this business and classify it correctly?
+- Can an AI agent find the machine-readable layer without being told that `/llms.txt` exists?
 - Can an AI agent understand the business without relying on visual UI?
 - Can an AI agent identify confirmed facts, missing facts, offers, services, prices, locations, and CTAs?
 - Can an AI agent compare this business against alternatives without hallucinating?
@@ -38,6 +39,7 @@ Do not use this skill for simple SEO metadata only unless the user specifically 
 A human website sells.
 A machine-readable layer explains.
 A discovery layer helps agents find and compare.
+A discovery hardening layer makes the machine-readable layer findable from a cold crawl.
 A tool layer lets agents act.
 A permission layer keeps actions safe.
 An evaluation layer proves the system works.
@@ -66,7 +68,10 @@ Use the eight-layer model:
 9. Every high-risk action must have a permission level and human approval rule.
 10. Every generated output should make it easier for an agent to answer: who is this for, what do they offer, where are they, how do I contact them, what should I recommend next, what can I do, what should I not claim, and when should I escalate?
 11. Design for both API agents and browser/computer-use agents.
-12. Generate evals before treating the system as ready.
+12. Do not treat `llms.txt`, `llms-full.txt`, or `/docs` as complete until they are discoverable from normal crawl paths.
+13. A machine-readable layer is incomplete until it is discoverable from at least three independent paths: homepage HTML, sitemap/robots, and a visible or crawlable documentation index.
+14. Every advertised machine-readable route must return 200 or redirect intentionally. Never link agents to a 404.
+15. Generate evals before treating the system as ready.
 
 ## Inputs to Request or Extract
 
@@ -152,10 +157,14 @@ Assess or generate:
 
 - `llms.txt`
 - `llms-full.txt`
+- `/docs/` and `/docs/index.md`
+- `/sitemap.md`
 - Markdown mirrors for important HTML pages
 - `README.md`
 - `/docs` source-of-truth files
 - Schema.org JSON-LD
+- Homepage alternate markdown links
+- Footer or documentation links to the machine-readable layer
 - Metadata map
 - Alt text map
 - Sitemap and canonical URL logic
@@ -174,6 +183,11 @@ Use `templates/llms.txt.md`, `templates/llms-full.txt.md`, `templates/readme.md`
 
 Map how an AI agent discovers, evaluates, and decides whether to recommend the business.
 
+This phase has two distinct parts:
+
+1. **Recommendation readiness** — can the agent classify, compare, and recommend the business accurately?
+2. **Discovery hardening** — can a cold agent find the machine-readable layer without being told where it is?
+
 Assess or generate:
 
 - Agent discovery profile
@@ -185,15 +199,26 @@ Assess or generate:
 - Query/intent coverage
 - Evidence required for claims
 - Source freshness and last-updated fields
+- Agent discovery hardening plan
+- `/docs/` index or `/docs/index.md`
+- `/sitemap.md`
+- Homepage `<link rel="alternate" type="text/markdown">` tags
+- Footer or visible links to agent docs
+- `sitemap.xml` entries for machine-readable files
+- `robots.txt` sitemap references and optional agent hints
+- Redirect aliases for common guesses, such as `/llm.txt`, `/ai.txt`, `/agents.txt`, and `/AGENTS.md`
 
 Output:
 
 - Agent Discovery Profile
 - Agent Journey Map
+- Agent Discovery Hardening Plan
 - Agent Recommendation Rules
 - Comparison Readiness Score
+- Agent Discoverability Score
+- Broken Discovery Paths Report
 
-Use `templates/agent-discovery-profile.md`, `templates/agent-journey-map.md`, and `checklists/agent-discoverability-audit.md`.
+Use `templates/agent-discovery-profile.md`, `templates/agent-journey-map.md`, `templates/agent-discovery-hardening-plan.md`, `templates/docs-index.md`, `templates/sitemap.md`, `checklists/agent-discoverability-audit.md`, and `checklists/agent-discovery-hardening.md`.
 
 ### Phase 5 — Context Layer: Retrieval and Documentation Surfaces
 
@@ -203,6 +228,8 @@ Assess or generate:
 
 - `llms.txt` as the short routing layer
 - `llms-full.txt` as the full machine summary
+- `/docs/` as the public documentation index
+- `/sitemap.md` as a markdown crawl map
 - Markdown mirrors for major pages
 - Source-of-truth docs
 - Last-updated fields
@@ -366,13 +393,16 @@ For a full build, generate or recommend this structure:
   llms.txt
   llms-full.txt
   sitemap.xml
+  sitemap.md
   robots.txt
 
 /docs
+  index.md
   business-profile.md
   source-of-truth.md
   agent-discovery-profile.md
   agent-journey-map.md
+  agent-discovery-hardening-plan.md
   context-retrieval-map.md
   services.md
   pricing.md
@@ -407,10 +437,13 @@ For a full build, generate or recommend this structure:
 /metadata
   page-metadata-map.md
   alt-text-map.md
+  homepage-alternate-links.html
+  footer-agent-docs.html
 
 /evals
   agent-readiness-evals.md
   sandbox-scenarios.md
+  cold-agent-crawl.md
 
 README.md
 ```
@@ -458,9 +491,10 @@ When using this skill in chat, structure the response as:
 2. What is missing
 3. Agent-readiness diagnosis by layer
 4. Agent journey and discovery risks
-5. Recommended file/tool structure
-6. Exact next implementation prompt or generated files
-7. Evaluation checklist
+5. Agent discovery hardening status
+6. Recommended file/tool structure
+7. Exact next implementation prompt or generated files
+8. Evaluation checklist
 
 ## Final Sanity Check
 
@@ -475,6 +509,10 @@ Before delivering, verify:
 - Does an agent know which actions require approval?
 - Does an agent know the source of truth for each fact?
 - Does an agent know how fresh the information is?
+- Can a cold agent find the machine-readable layer without being told the exact file paths?
+- Do `/docs/`, `/llms.txt`, `/llms-full.txt`, and `/sitemap.md` return 200 or intentional redirects?
+- Does the homepage expose alternate markdown links or visible agent documentation links?
+- Does `sitemap.xml` list the agent-readable files?
 - Does an agent know what to do if an API fails?
 - Can the business audit what the agent did and why?
 - Can the business run evals before exposing the agent to real users?

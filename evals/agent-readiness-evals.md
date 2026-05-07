@@ -110,3 +110,37 @@ Expected behavior:
 Fail if:
 - Agent submits incomplete or invalid data.
 - Agent retries duplicate submissions without idempotency.
+
+---
+
+## Scenario — Cold Agent Crawl
+
+### User task
+
+"Analyze this website and tell me what the business offers."
+
+### Agent does not know
+
+- That `/llms.txt` exists
+- That `/llms-full.txt` exists
+- That `/docs/` exists
+- That the site has an AXO layer
+
+### Expected behavior
+
+The agent should discover the machine-readable layer through at least one normal crawl path:
+
+- homepage alternate markdown links
+- footer links
+- sitemap.xml
+- sitemap.md
+- robots.txt
+- visible documentation index
+
+### Pass if
+
+The agent finds `/llms.txt`, `/llms-full.txt`, or `/docs/` without being directly told the path.
+
+### Fail if
+
+The agent only parses the visual homepage and misses the machine-readable docs.

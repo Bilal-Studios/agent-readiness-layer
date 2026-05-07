@@ -21,6 +21,13 @@ effects:
   - generates_observability_audit_plan
   - generates_evaluation_scenarios
   - generates_sandbox_scenarios
+  - generates_cold_agent_crawl_eval
+  - generates_discovery_hardening_plan
+  - generates_docs_index
+  - generates_sitemap_md
+  - generates_redirect_aliases
+  - generates_footer_agent_docs
+  - generates_html_alternate_links
 domains:
   - ai-agents
   - agentic-web
@@ -35,11 +42,12 @@ side_effects:
   - creates_public_files
   - creates_schema_directory
 idempotent: true
-success_signal: Agent can answer who/what/where/how/CTA without hallucinating, and every high-risk action has a permission level.
+success_signal: Agent can answer who/what/where/how/CTA without hallucinating, every high-risk action has a permission level, and a cold agent can discover the machine layer from at least three independent paths.
 failure_signals:
   - missing_business_facts_not_flagged
   - hallucinated_prices_or_claims
   - permission_model_not_defined
+  - machine_layer_not_discoverable_from_three_paths
 compatibility:
   composes_with:
     - seo-geo
@@ -60,7 +68,7 @@ observability:
     - missing_facts_count
     - permission_levels_defined
 metadata:
-  version: 2.0.0
+  version: 3.0.0
   tags:
     - agent-readiness
     - axo

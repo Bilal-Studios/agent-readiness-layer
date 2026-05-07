@@ -18,7 +18,22 @@ The package follows the folder-based skill model:
 
 The skill treats `llms.txt` as a short routing/index layer and `llms-full.txt` as a full machine-readable website summary.
 
-It also recommends markdown mirrors and source-of-truth docs for token-efficient retrieval.
+It also recommends markdown mirrors, `/docs/` indexes, `/sitemap.md`, and source-of-truth docs for token-efficient retrieval.
+
+## Agent Discovery Hardening
+
+The skill assumes that not every agent will automatically check `/llms.txt` or know that machine-readable docs exist.
+
+For that reason, v3 adds hardening patterns that make the AXO layer discoverable from normal crawl behavior:
+
+- homepage `<link rel="alternate" type="text/markdown">` signals
+- footer links to AI / Agent Docs
+- `/docs/` and `/docs/index.md` indexes
+- `sitemap.xml` entries for machine-readable files
+- `/sitemap.md` for markdown-first crawling
+- `robots.txt` sitemap references and optional hints
+- redirects for common guesses like `/llm.txt`, `/ai.txt`, `/agents.txt`, and `/AGENTS.md`
+- cold-agent crawl evals
 
 ## MCP / Tool Protocols
 
