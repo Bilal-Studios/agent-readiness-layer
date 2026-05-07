@@ -1,6 +1,6 @@
 name: agent-readiness-layer
 kind: skill
-description: Transform any website or business into an AI agent-operable layer — generates llms.txt, tool maps, permission models, and evaluation scenarios (AXO).
+description: Transform any website or business into an AI agent-operable layer — generates llms.txt, tool maps, MCP readiness, permission models, discovery profiles, and evaluation scenarios (AXO).
 preconditions:
   - check: "true"
     description: No technical dependencies — works from a URL, brief, or codebase.
@@ -9,9 +9,18 @@ effects:
   - generates_llms_txt
   - generates_llms_full_txt
   - generates_business_source_of_truth
+  - generates_agent_discovery_profile
+  - generates_agent_journey_map
+  - generates_context_retrieval_map
   - generates_agent_action_matrix
+  - generates_mcp_readiness_map
+  - generates_openapi_action_definitions
+  - generates_browser_agent_readiness
   - generates_permission_model
+  - generates_agent_identity_model
+  - generates_observability_audit_plan
   - generates_evaluation_scenarios
+  - generates_sandbox_scenarios
 domains:
   - ai-agents
   - agentic-web
@@ -51,7 +60,7 @@ observability:
     - missing_facts_count
     - permission_levels_defined
 metadata:
-  version: 1.0.0
+  version: 2.0.0
   tags:
     - agent-readiness
     - axo

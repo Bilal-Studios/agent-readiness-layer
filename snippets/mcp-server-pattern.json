@@ -1,0 +1,40 @@
+{
+  "server": {
+    "name": "business-agent-server",
+    "description": "MCP-style server exposing business facts, service catalog, and safe customer-intent actions to AI agents.",
+    "auth_required": true
+  },
+  "resources": [
+    {
+      "uri": "business://profile",
+      "name": "Business Profile",
+      "description": "Canonical public facts about the business, including name, category, location, contact methods, and opening hours.",
+      "access_scope": "business.read"
+    },
+    {
+      "uri": "business://services",
+      "name": "Service Catalog",
+      "description": "Machine-readable list of services or products with descriptions, availability, and safe claims.",
+      "access_scope": "business.read"
+    }
+  ],
+  "tools": [
+    {
+      "name": "create_lead",
+      "description": "Create a low-risk lead record when a user has provided contact information and expressed interest in the business.",
+      "input_schema": {
+        "type": "object",
+        "required": ["name", "contact", "intent", "idempotency_key"],
+        "properties": {
+          "name": { "type": "string", "description": "User's name." },
+          "contact": { "type": "string", "description": "Phone, WhatsApp, or email." },
+          "intent": { "type": "string", "description": "Short summary of the user's request." },
+          "idempotency_key": { "type": "string", "description": "Unique key to prevent duplicate lead creation on retries." }
+        }
+      },
+      "risk_level": "low",
+      "approval_required": false,
+      "access_scope": "leads.write"
+    }
+  ]
+}
