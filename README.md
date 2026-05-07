@@ -61,7 +61,7 @@ If any answer is no — this skill fixes it.
 ### Claude Code
 
 ```bash
-npx skills add bilalstudio/agent-readiness-layer
+npx skills add Bilal-Studios/agent-readiness-layer
 ```
 
 Then invoke with:
