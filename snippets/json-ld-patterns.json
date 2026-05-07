@@ -1,0 +1,109 @@
+{
+  "organization": {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{business_name}}",
+    "url": "{{website_url}}",
+    "logo": "{{logo_url}}",
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "telephone": "{{phone}}",
+        "contactType": "customer service",
+        "availableLanguage": ["{{language_1}}", "{{language_2}}"]
+      }
+    ]
+  },
+  "localBusiness": {
+    "@context": "https://schema.org",
+    "@type": "{{LocalBusinessSubtype}}",
+    "name": "{{business_name}}",
+    "url": "{{website_url}}",
+    "telephone": "{{phone}}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{street_address}}",
+      "addressLocality": "{{city}}",
+      "addressRegion": "{{region}}",
+      "postalCode": "{{postal_code}}",
+      "addressCountry": "{{country_code}}"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "{{opens}}",
+        "closes": "{{closes}}"
+      }
+    ],
+    "availableLanguage": ["{{language_1}}", "{{language_2}}"],
+    "priceRange": "{{price_range}}"
+  },
+  "website": {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{website_name}}",
+    "url": "{{website_url}}",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{website_url}}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  },
+  "webPage": {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{{page_name}}",
+    "url": "{{page_url}}",
+    "description": "{{page_description}}",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "{{website_name}}",
+      "url": "{{website_url}}"
+    }
+  },
+  "faqPage": {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "{{question}}",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "{{answer}}"
+        }
+      }
+    ]
+  },
+  "service": {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "{{service_name}}",
+    "description": "{{service_description}}",
+    "provider": {
+      "@type": "Organization",
+      "name": "{{business_name}}"
+    },
+    "areaServed": "{{area_served}}",
+    "serviceType": "{{service_type}}"
+  },
+  "breadcrumbList": {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "{{home_url}}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{{page_name}}",
+        "item": "{{page_url}}"
+      }
+    ]
+  }
+}

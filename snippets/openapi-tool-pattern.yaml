@@ -1,0 +1,103 @@
+openapi: 3.1.0
+info:
+  title: '{{Business Name}} Agent Tools'
+  version: '1.0.0'
+  description: 'Machine-readable tool definitions for AI agents operating {{Business Name}} workflows.'
+paths:
+  /agent/create-lead:
+    post:
+      operationId: createLead
+      summary: Create a low-risk lead request
+      description: >
+        Use when a user has provided enough contact information and wants the business to contact them.
+        Do not use for confirmed appointments, payments, refunds, cancellations, or regulated commitments.
+      x-agent-permission-level: 2
+      x-human-approval-required: false
+      x-idempotency-required: true
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: true
+          schema:
+            type: string
+          description: Unique key used to prevent duplicate lead creation during retries.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - name
+                - contact_method
+                - contact_value
+                - intent_summary
+              properties:
+                name:
+                  type: string
+                  description: User's name.
+                contact_method:
+                  type: string
+                  enum: [phone, whatsapp, email]
+                  description: Preferred contact channel.
+                contact_value:
+                  type: string
+                  description: Phone number, WhatsApp number, or email address.
+                service_interest:
+                  type: string
+                  description: Service or product the user is interested in, if known.
+                intent_summary:
+                  type: string
+                  description: Short summary of what the user wants.
+                language:
+                  type: string
+                  description: Preferred language, if known.
+      responses:
+        '200':
+          description: Lead created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [success, lead_id, status, message]
+                properties:
+                  success:
+                    type: boolean
+                    const: true
+                  lead_id:
+                    type: string
+                  status:
+                    type: string
+                  message:
+                    type: string
+        '400':
+          description: Validation error the agent can correct.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentError'
+components:
+  schemas:
+    AgentError:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+          const: false
+        error:
+          type: object
+          required: [code, message, recoverable]
+          properties:
+            code:
+              type: string
+              examples: [VALIDATION_ERROR, MISSING_REQUIRED_FIELD, PERMISSION_DENIED, RATE_LIMITED]
+            message:
+              type: string
+            field:
+              type: string
+            recoverable:
+              type: boolean
+            suggested_fix:
+              type: string

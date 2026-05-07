@@ -1,0 +1,69 @@
+name: agent-readiness-layer
+kind: skill
+description: Transform any website or business into an AI agent-operable layer — generates llms.txt, tool maps, permission models, and evaluation scenarios (AXO).
+preconditions:
+  - check: "true"
+    description: No technical dependencies — works from a URL, brief, or codebase.
+    required: true
+effects:
+  - generates_llms_txt
+  - generates_llms_full_txt
+  - generates_business_source_of_truth
+  - generates_agent_action_matrix
+  - generates_permission_model
+  - generates_evaluation_scenarios
+domains:
+  - ai-agents
+  - agentic-web
+  - seo
+  - documentation
+  - machine-readability
+cost: medium
+latency: medium
+risk_level: low
+side_effects:
+  - creates_docs_directory
+  - creates_public_files
+  - creates_schema_directory
+idempotent: true
+success_signal: Agent can answer who/what/where/how/CTA without hallucinating, and every high-risk action has a permission level.
+failure_signals:
+  - missing_business_facts_not_flagged
+  - hallucinated_prices_or_claims
+  - permission_model_not_defined
+compatibility:
+  composes_with:
+    - seo-geo
+    - frontend-design
+  enables:
+    - ai-agent-integration
+    - voice-agent-readiness
+    - llm-search-visibility
+    - browser-agent-automation
+observability:
+  logs:
+    - business_profile_extracted
+    - layer_completed
+    - missing_info_logged
+    - forbidden_claims_defined
+  metrics:
+    - layers_completed_count
+    - missing_facts_count
+    - permission_levels_defined
+metadata:
+  version: 1.0.0
+  tags:
+    - agent-readiness
+    - axo
+    - llms-txt
+    - ai-agent
+    - machine-readable
+    - agentic-web
+    - geo
+    - rag
+  examples:
+    - Make my dental clinic website AI-agent-ready.
+    - Generate llms.txt and llms-full.txt for my SaaS.
+    - Build a permission model for my booking agent.
+    - Audit my website for AI agent readiness.
+    - Create an agent action matrix for my restaurant's online ordering flow.
