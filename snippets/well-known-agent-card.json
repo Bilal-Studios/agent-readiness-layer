@@ -1,0 +1,50 @@
+{
+  "name": "Your Business Name",
+  "description": "Concise, factual description of what this business offers and which intents this agent surface supports.",
+  "url": "https://example.com",
+  "version": "1.0.0",
+  "provider": {
+    "organization": "Your Business Name",
+    "url": "https://example.com"
+  },
+  "documentationUrl": "https://example.com/llms.txt",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "authentication": {
+    "schemes": ["none"],
+    "credentials": null
+  },
+  "defaultInputModes": ["text/plain", "application/json"],
+  "defaultOutputModes": ["text/markdown", "application/json"],
+  "skills": [
+    {
+      "id": "business-info",
+      "name": "Verified Business Information",
+      "description": "Retrieve confirmed services, pricing rules, locations, hours, and FAQs from /llms.txt and /docs/.",
+      "tags": ["info", "read-only", "llms-txt"],
+      "examples": [
+        "What services do you offer?",
+        "How do I book an appointment?"
+      ]
+    },
+    {
+      "id": "lead-inquiry",
+      "name": "Submit Inquiry Request (Level 2)",
+      "description": "Draft and submit a low-risk contact or booking request after user confirmation. Never confirms payment or binding commitments without human approval.",
+      "tags": ["inquiry", "booking", "human-approval"],
+      "examples": [
+        "Request a consultation for next week"
+      ]
+    }
+  ],
+  "machineReadableSurface": {
+    "llmsTxt": "https://example.com/llms.txt",
+    "llmsFullTxt": "https://example.com/llms-full.txt",
+    "agentsMd": "https://example.com/AGENTS.md",
+    "docsIndex": "https://example.com/docs/",
+    "mcpDiscovery": "https://example.com/.well-known/mcp.json"
+  }
+}

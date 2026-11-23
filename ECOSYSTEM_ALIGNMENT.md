@@ -1,87 +1,42 @@
-# Ecosystem Alignment Notes
+# Ecosystem Alignment Notes (v5.0.0)
 
-This skill is designed to fit the current agent-infrastructure ecosystem rather than act as a standalone prompt pack.
+This skill is designed to fit the modern agent-infrastructure ecosystem rather than act as a standalone prompt pack.
 
-## Compatible Concepts
+## Agent Skills Standard (`agentskills.io` & Agensi)
 
-## Agent Skills
+The package follows the open folder-based skill specification:
 
-The package follows the folder-based skill model:
+- `SKILL.md` with YAML frontmatter (`name`, `description`, `license`, `compatibility`, `metadata`) for progressive disclosure
+- `scripts/axo-audit.mjs` — zero-dependency, strictly read-only CLI auditor (safe for marketplace automated security scans)
+- `.claude-plugin/plugin.json` & `marketplace.json` for native Claude Code installation
+- `templates/`, `checklists/`, `snippets/`, `evals/`, and `examples/` for modular implementation
 
-- `SKILL.md` as the entry point
-- templates for generated artifacts
-- checklists for audits
-- snippets for structured data/tooling
-- evals for scenario testing
+## Broadcast Protocol v5 (12 Independent Discovery Signals)
 
-## llms.txt / Machine-Readable Website Docs
+A site's machine-readable layer is not complete until a cold agent can find it through at least **five independent paths** without being told file URLs in advance:
 
-The skill treats `llms.txt` as a short routing/index layer and `llms-full.txt` as a full machine-readable website summary.
+1. Homepage `<link rel="alternate" type="text/markdown">` + HTTP `Link` headers
+2. First-child `<body>` discovery anchor (before JS execution)
+3. Footer `<section role="doc-instructions" aria-labelledby>` (DPUB ARIA landmark for browser/computer-use agents)
+4. `robots.txt` `Link: </llms.txt>; rel="help"` and AI docs directives
+5. `sitemap.xml` machine-route entries + `/sitemap.md`
+6. `/.well-known/ai-plugin.json`
+7. No-JS `/docs/` HTML index + `/docs/index.md`
+8. `/AGENTS.md` numbered start-here chain
+9. HTTP content negotiation (`Accept: text/markdown` + `Vary: Accept`)
+10. `/.well-known/agent-card.json` (A2A Agent Card)
+11. `/.well-known/mcp.json` (Streamable HTTP MCP server discovery)
+12. WebMCP (`navigator.modelContext.registerTool`) browser-native tool registration
 
-It also recommends markdown mirrors, `/docs/` indexes, `/sitemap.md`, and source-of-truth docs for token-efficient retrieval.
+## MCP, A2A, WebMCP & OpenAPI
 
-## Agent Discovery Hardening
+- **MCP (`snippets/well-known-mcp.json`, `snippets/mcp-server-pattern.json`):** separates read-only resources from scoped, approval-gated tools.
+- **A2A (`snippets/well-known-agent-card.json`):** advertises capabilities, input/output modes, skills, and verified machine-doc URLs.
+- **WebMCP (`snippets/webmcp-browser-tools.js`):** registers typed browser tools with explicit `readOnlyHint` vs. `userConfirmed` gates.
+- **OpenAPI (`snippets/openapi-tool-pattern.yaml`):** typed inputs, deterministic error shapes, idempotency keys, and human approval rules.
 
-The skill assumes that not every agent will automatically check `/llms.txt` or know that machine-readable docs exist.
+## Agent Security & Governance
 
-For that reason, v3 adds hardening patterns that make the AXO layer discoverable from normal crawl behavior:
-
-- homepage `<link rel="alternate" type="text/markdown">` signals
-- footer links to AI / Agent Docs
-- `/docs/` and `/docs/index.md` indexes
-- `sitemap.xml` entries for machine-readable files
-- `/sitemap.md` for markdown-first crawling
-- `robots.txt` sitemap references and optional hints
-- redirects for common guesses like `/llm.txt`, `/ai.txt`, `/agents.txt`, and `/AGENTS.md`
-- cold-agent crawl evals
-
-## MCP / Tool Protocols
-
-The skill includes an MCP readiness map and a server pattern that model:
-
-- resources = readable business facts and catalogs
-- tools = controlled business actions
-- prompts = reusable agent behavior templates
-- scopes = least-privilege permissions
-
-## OpenAPI / Function Calling
-
-The skill includes OpenAPI-style action definitions with:
-
-- clear action descriptions
-- typed inputs
-- structured outputs
-- deterministic error shapes
-- idempotency keys
-- human approval boundaries
-
-## Browser / Computer-Use Agents
-
-The skill includes browser-agent readiness checks for cases where APIs do not exist yet.
-
-It focuses on predictable forms, labels, selectors, success states, and fallback paths.
-
-## Agent Security and Governance
-
-The skill includes templates for:
-
-- agent-specific identity
-- least-privilege scopes
-- approval rules
-- audit logs
-- observability
-- rate-limit and retry policy
-
-## Agent Discoverability / AXO
-
-The skill formalizes AXO as:
-
-- discovery
-- classification
-- comparison
-- recommendation
-- action
-- handoff
-- post-action audit
-
-This positions the skill as a practical generator for Agent Experience Optimization, not only AI SEO.
+- 6-level permission model (Level 0 Read-only → Level 5 Destructive / Financial / Legal)
+- Least-privilege scoped agent identities (never reuse broad human admin credentials)
+- Audit logs, hallucination-trap evals, and live cold-agent crawl verification via `scripts/axo-audit.mjs`

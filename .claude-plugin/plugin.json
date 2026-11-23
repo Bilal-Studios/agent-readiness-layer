@@ -1,0 +1,28 @@
+{
+  "name": "agent-readiness-layer",
+  "version": "5.0.0",
+  "description": "AXO (Agent Experience Optimization) — transform any website, product, API, or codebase into an AI agent-operable layer with Broadcast Protocol v5 discovery (12 signals), permission models, action matrices, evals, and a zero-dependency CLI auditor.",
+  "author": {
+    "name": "Bilal Studio",
+    "email": "hello@bilalstudio.io",
+    "url": "https://bilalstudio.io"
+  },
+  "homepage": "https://bilalstudio.io",
+  "repository": "https://github.com/Bilal-Studios/agent-readiness-layer",
+  "license": "MIT",
+  "keywords": [
+    "axo",
+    "agent-readiness",
+    "llms-txt",
+    "agents-md",
+    "mcp",
+    "webmcp",
+    "a2a",
+    "agent-skills",
+    "ai-agents",
+    "geo"
+  ],
+  "skills": [
+    "./SKILL.md"
+  ]
+}

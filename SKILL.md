@@ -1,4 +1,28 @@
-# AXO / Agent Readiness Layer Skill
+---
+name: agent-readiness-layer
+description: AXO (Agent Experience Optimization) — transform any website, product, API, or codebase into an AI agent-operable layer with Broadcast Protocol v5 (12 independent discovery signals: llms.txt, AGENTS.md, A2A agent-card, WebMCP, MCP discovery, content negotiation), permission models, action matrices, evals, and a zero-dependency live CLI auditor. Use when building or auditing any public site, app, library, or API to make it AI-agent-ready.
+license: MIT
+compatibility: Works with Claude Code, Codex, Cursor, Windsurf, Antigravity, Gemini CLI, and Agensi MCP. Node.js 18+ optional for scripts/axo-audit.mjs.
+metadata:
+  author: Bilal Studio
+  email: hello@bilalstudio.io
+  version: "5.0.0"
+  homepage: "https://bilalstudio.io"
+  repository: "https://github.com/Bilal-Studios/agent-readiness-layer"
+---
+
+# AXO / Agent Readiness Layer Skill (v5)
+
+## Quick Live Audit (Before or After Implementation)
+
+When auditing a live URL, run the included zero-dependency, strictly read-only CLI auditor first to measure all 12 Broadcast Protocol v5 signals:
+
+```bash
+node scripts/axo-audit.mjs https://example.com
+node scripts/axo-audit.mjs https://example.com --json
+```
+
+Use the score and failing signals to drive Phase 3–6 fixes and verify cold-agent discoverability after deployment.
 
 ## Purpose
 
@@ -207,6 +231,10 @@ Assess or generate:
 - `sitemap.xml` entries for machine-readable files
 - `robots.txt` sitemap references and optional agent hints
 - Redirect aliases for common guesses, such as `/llm.txt`, `/ai.txt`, `/agents.txt`, and `/AGENTS.md`
+- `/.well-known/agent-card.json` (A2A Agent Card) and `/.well-known/ai-plugin.json`
+- `/.well-known/mcp.json` (MCP Streamable HTTP server discovery)
+- WebMCP browser tool registration (`navigator.modelContext`) for safe client-side browser-agent actions
+- HTTP content negotiation (`Accept: text/markdown` + `Vary: Accept`)
 
 Output:
 
@@ -217,8 +245,9 @@ Output:
 - Comparison Readiness Score
 - Agent Discoverability Score
 - Broken Discovery Paths Report
+- Live CLI Audit Report (`scripts/axo-audit.mjs`)
 
-Use `templates/agent-discovery-profile.md`, `templates/agent-journey-map.md`, `templates/agent-discovery-hardening-plan.md`, `templates/docs-index.md`, `templates/sitemap.md`, `checklists/agent-discoverability-audit.md`, and `checklists/agent-discovery-hardening.md`.
+Use `templates/agent-discovery-profile.md`, `templates/agent-journey-map.md`, `templates/agent-discovery-hardening-plan.md`, `templates/docs-index.md`, `templates/sitemap.md`, `snippets/well-known-agent-card.json`, `snippets/well-known-mcp.json`, `snippets/webmcp-browser-tools.js`, `checklists/agent-discoverability-audit.md`, and `checklists/agent-discovery-hardening.md`.
 
 ### Phase 5 — Context Layer: Retrieval and Documentation Surfaces
 

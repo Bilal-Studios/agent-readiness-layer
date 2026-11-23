@@ -1,0 +1,16 @@
+{
+  "name": "bilal-studio-skills",
+  "owner": {
+    "name": "Bilal Studio",
+    "email": "hello@bilalstudio.io",
+    "url": "https://bilalstudio.io"
+  },
+  "plugins": [
+    {
+      "name": "agent-readiness-layer",
+      "source": "./",
+      "description": "AXO (Agent Experience Optimization) — transform any website, product, API, or codebase into an AI agent-operable layer with 12-signal Broadcast Protocol v5 discovery, permission models, action matrices, evals, and a live CLI auditor.",
+      "version": "5.0.0"
+    }
+  ]
+}

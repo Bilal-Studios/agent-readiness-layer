@@ -1,177 +1,124 @@
-# AXO / Agent Readiness Layer Skill
+# AXO — Agent Readiness Layer Skill (v5.0.0)
 
-This package contains a reusable skill for creating an **Agent Readiness Layer** around a website, business, product, API, or documentation system.
+[![Version](https://img.shields.io/badge/version-5.0.0-00FFD1?style=flat-square)](./CHANGELOG.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
+[![Agent Skills Standard](https://img.shields.io/badge/standard-agentskills.io-FF00C8?style=flat-square)](./SKILL.md)
+[![Zero-Dep CLI](https://img.shields.io/badge/CLI-zero--dependency-FFD166?style=flat-square)](./scripts/axo-audit.mjs)
 
-It helps turn a normal human-facing site into an **agent-operable business surface**: a layer that AI agents can discover, understand, trust, compare, recommend, and use safely.
+Turn any website, SaaS product, API, or codebase into an **AI agent-operable business surface** — so AI agents can discover, understand, compare, recommend, and act on it safely without hallucinating.
 
-Version 3 adds **Agent Discovery Hardening**: the machine-readable layer is not considered complete until a cold agent can find it without being explicitly told that `/llms.txt`, `/llms-full.txt`, or `/docs/` exist.
+> **SEO** asks: *Can a search engine rank this?*
+> **GEO** asks: *Can an LLM cite this?*
+> **AXO (Agent Experience Optimization)** asks: *Can a cold AI agent discover this site, verify its facts, avoid forbidden claims, invoke the right tool with the right permission level, and leave an audit trail?*
 
-Version 4 adds the **Broadcast Protocol**: a standardized set of signals that make the machine layer discoverable through nine independent paths — so any agent, regardless of how it was built, can find it.
+---
 
-## What This Skill Generates
+## Install in 10 Seconds
 
-- LLM-friendly documentation
-- `llms.txt` and `llms-full.txt`
-- `AGENTS.md` — dedicated agent entry point with start-here chain
-- Markdown mirrors and source-of-truth docs
-- Agent discovery and recommendation profiles
-- Agent discovery hardening plans with broadcast signal checklist
-- `/docs/` HTML index (no JavaScript required)
-- `/sitemap.md`, `robots.txt` hints, alternate markdown links, redirect aliases
-- `/.well-known/ai-plugin.json` — cross-platform plugin discovery
-- Content negotiation endpoint for `Accept: text/markdown`
-- Static fallbacks for JavaScript-rendered pages
-- Machine-readable page profiles
-- Schema.org JSON-LD and metadata maps
-- OpenAPI/MCP readiness maps
-- Tool/action definitions
-- Agent action matrices
-- Permission and identity models
-- Human approval and escalation rules
-- Memory policies
-- Observability and audit requirements
-- Sandbox and evaluation scenarios
-- Agent journey maps
-
-## Core Concept
-
-This skill is not just SEO, GEO, AEO, or README generation.
-
-It is **AXO: Agent Experience Optimization**.
-
-SEO asks: can a search engine rank this?
-
-AXO asks:
-
-- Can an AI agent discover this business?
-- Can a cold agent find the machine-readable layer without being told the file paths?
-- Can it understand what the business does?
-- Can it compare the offer against alternatives?
-- Can it recommend the correct next step?
-- Can it use the right tool or API safely?
-- Can it avoid hallucinated claims?
-- Can the business audit what happened afterward?
-
-## Framework
-
-The skill uses eight layers:
-
-1. **Eyes** — structure and machine readability
-2. **Discovery** — how agents find, classify, compare, and reach the machine-readable layer
-3. **Context** — source-of-truth docs, markdown mirrors, `llms.txt`, and retrieval surfaces
-4. **Hands** — APIs, forms, tools, MCP servers, and actions
-5. **Permits** — identity, scopes, approvals, safety, and auditability
-6. **Brain** — intent logic, decision rules, conversion routing, and refusal boundaries
-7. **Memory** — durable context, brand facts, user preference boundaries, and privacy
-8. **Evaluation** — scenario tests, sandbox tests, hallucination traps, and regression checks
-
-## Broadcast Protocol (v4)
-
-A machine-readable layer is incomplete until it is discoverable from at least **five independent paths**. Target nine.
-
-| Signal | Who reads it |
-|--------|-------------|
-| `<link rel="alternate" type="text/markdown" href="/llms.txt" title="AI Agent Docs">` in `<head>` | HTML-inspection agents, head-parsers |
-| Hidden anchor `<a href="/llms.txt" style="display:none">` as first child of `<body>` | Sequential DOM-parsers, scrapers that skip `<head>` |
-| `<section role="doc-instructions" aria-labelledby>` in footer | Browser agents, computer-use agents navigating by ARIA landmarks |
-| `robots.txt` with `Link: </llms.txt>; rel="help"` + AI docs comment block | Crawlers that parse robots.txt for agent hints |
-| `sitemap.xml` with all machine files listed | Agents that start from robots → sitemap |
-| `/.well-known/ai-plugin.json` with `description_for_model` pointing to docs | OpenAI-compatible agents, agents that check `.well-known` |
-| `/docs/` as a no-JavaScript HTML index | Agents following links without JS execution |
-| `/AGENTS.md` with numbered start-here chain | Coding agents, GitHub-pattern agents |
-| `/api/negotiate` with `Accept: text/markdown` → returns `llms.txt` | Agents that use HTTP content negotiation |
-
-Each signal is independent. An agent that misses one can find the machine layer through another.
-
-## How to Use
-
-Start with `SKILL.md`. Then use the templates in `/templates`, checklists in `/checklists`, snippets in `/snippets`, and evals in `/evals` to generate a full Agent Readiness Layer for a specific website or business.
-
-For planning-only work, use the framework and checklists without generating files.
-
-For implementation work, generate the requested artifacts using the templates.
-
-## Ecosystem Alignment
-
-This skill is designed to align with the modern agent infrastructure ecosystem:
-
-- Agent Skills / `SKILL.md` package format
-- `llms.txt`, `llms-full.txt`, `AGENTS.md`, markdown mirrors, and `sitemap.md`
-- Schema.org JSON-LD
-- OpenAPI / Swagger tool definitions
-- MCP-style tool/resource/prompt surfaces
-- `.well-known/ai-plugin.json` (OpenAI plugin standard)
-- DPUB ARIA roles for browser-agent navigation
-- HTTP content negotiation (`Accept: text/markdown`)
-- Agent identity, least-privilege scopes, and audit logs
-- Browser-agent and computer-use readiness
-- Sandbox testing and deterministic evals
-- Agent discoverability and recommendation optimization
-
-## Recommended Deliverable Groups
-
-```txt
-/public
-  llms.txt
-  llms-full.txt
-  AGENTS.md
-  sitemap.xml
-  sitemap.md
-  robots.txt
-
-/.well-known
-  ai-plugin.json
-
-/api
-  negotiate.js          (content negotiation serverless function)
-
-/docs
-  index.html            (no-JS HTML docs index)
-  index.md              (markdown mirror)
-  business-profile.md
-  source-of-truth.md
-  agent-discovery-profile.md
-  agent-journey-map.md
-  agent-discovery-hardening-plan.md
-  context-retrieval-map.md
-  services.md
-  pricing.md
-  locations.md
-  faq.md
-  offers.md
-  target-audience.md
-  brand-voice.md
-  conversion-rules.md
-  agent-behavior-rules.md
-  permission-model.md
-  agent-identity-model.md
-  memory-policy.md
-  tool-readiness-map.md
-  mcp-readiness-map.md
-  openapi-action-definitions.md
-  browser-agent-readiness.md
-  agent-action-matrix.md
-  observability-audit-plan.md
-  evaluation-plan.md
-  missing-info-report.md
-
-/schema
-  organization.json
-  local-business.json
-  website.json
-  webpage.json
-  services.json
-  faq.json
-  breadcrumbs.json
-
-/metadata
-  page-metadata-map.md
-  alt-text-map.md
-
-/evals
-  agent-readiness-evals.md
-  sandbox-scenarios.md
-  cold-agent-crawl.md
-
-README.md
+### Universal Skills CLI (`skills.sh` / Codex / Claude Code / Cursor / Windsurf / Antigravity)
+```bash
+npx skills add Bilal-Studios/agent-readiness-layer
 ```
+
+### Agensi Marketplace (`agensi.io`)
+Install directly from [Agensi](https://agensi.io) via the Agensi MCP connector, or download the packaged skill bundle.
+
+### Manual Clone (Any Agent Harness)
+```bash
+git clone https://github.com/Bilal-Studios/agent-readiness-layer.git ~/.agents/skills/agent-readiness-layer
+```
+
+---
+
+## Instant Live Audit (Zero Dependencies)
+
+Score any live website against all **12 Broadcast Protocol v5 signals** right now — pure Node.js 18+ built-in `fetch`, strictly read-only, zero packages to install:
+
+```bash
+node scripts/axo-audit.mjs https://example.com
+node scripts/axo-audit.mjs https://example.com --json
+```
+
+It checks `/llms.txt`, `/llms-full.txt`, `/AGENTS.md`, `<link rel="alternate" type="text/markdown">`, DPUB ARIA `role="doc-instructions"`, `robots.txt` agent hints, `sitemap.xml` / `sitemap.md`, `/docs/`, Schema.org JSON-LD, `Accept: text/markdown` content negotiation, `/.well-known/agent-card.json` (A2A) & `ai-plugin.json`, and `/.well-known/mcp.json` / WebMCP — then outputs a **0–100 AXO Score** and prioritized fixes.
+
+---
+
+## What's New in v5.0.0
+
+- **Zero-Dependency Live CLI Auditor (`scripts/axo-audit.mjs`)** — verify real cold-agent discoverability before and after shipping.
+- **Broadcast Protocol v5 (12 Independent Signals)** — adds 3 modern agentic-web standards on top of v4's 9 signals:
+  - **A2A Agent Card** (`snippets/well-known-agent-card.json` → `/.well-known/agent-card.json`)
+  - **MCP Streamable HTTP Discovery** (`snippets/well-known-mcp.json` → `/.well-known/mcp.json`)
+  - **WebMCP Browser Tool Registration** (`snippets/webmcp-browser-tools.js` → `navigator.modelContext`)
+- **Full Ecosystem Packaging** — compliant `SKILL.md` YAML frontmatter (`agentskills.io` / Agensi.io), `.claude-plugin/plugin.json` + `marketplace.json`, and clean progressive-disclosure layout.
+
+---
+
+## The 8-Layer AXO Framework
+
+1. **Eyes** — Semantic HTML, Schema.org JSON-LD, and clean machine readability
+2. **Discovery** — How cold agents find, classify, compare, and recommend the business
+3. **Context** — Source-of-truth docs, `llms.txt`, `llms-full.txt`, `/docs/`, and Markdown mirrors
+4. **Hands** — OpenAPI schemas, MCP tools/resources, WebMCP browser tools, and form fallbacks
+5. **Permits** — 6-tier permission model (Level 0 read-only → Level 5 destructive/legal/financial), agent identity, and human-approval gates
+6. **Brain** — Intent routing, conversion logic, refusal boundaries, and forbidden-claim rules
+7. **Memory** — Durable verified facts vs. ephemeral user state and privacy boundaries
+8. **Evaluation** — Cold-agent crawl evals, hallucination traps, sandbox scenarios, and regression checks
+
+---
+
+## Broadcast Protocol v5 (12 Independent Signals)
+
+A machine-readable layer is incomplete until a cold agent can discover it through at least **5 independent paths**. Target all 12:
+
+| # | Signal | Who reads it |
+|---|--------|-------------|
+| 1 | `<link rel="alternate" type="text/markdown" href="/llms.txt" title="AI Agent Docs">` in `<head>` | HTML-inspection agents, head parsers |
+| 2 | Hidden anchor `<a href="/llms.txt" style="display:none">` as first child of `<body>` | Sequential DOM parsers that skip `<head>` |
+| 3 | `<section role="doc-instructions" aria-labelledby>` in footer | Browser & computer-use agents navigating ARIA landmarks |
+| 4 | `robots.txt` with `Link: </llms.txt>; rel="help"` + AI docs block | Crawlers inspecting `robots.txt` first |
+| 5 | `sitemap.xml` listing machine files + `/sitemap.md` | Agents traversing robots → sitemap |
+| 6 | `/.well-known/ai-plugin.json` | OpenAI-compatible plugin agents |
+| 7 | `/docs/` no-JavaScript HTML index + `/docs/index.md` | Agents crawling without JS execution |
+| 8 | `/AGENTS.md` with numbered start-here chain | Coding agents & repo-pattern agents |
+| 9 | `Accept: text/markdown` content negotiation (`Vary: Accept`) | HTTP-negotiating agents & edge gateways |
+| 10 | `/.well-known/agent-card.json` (A2A) | Agent-to-Agent (A2A) discovery clients |
+| 11 | `/.well-known/mcp.json` | Streamable HTTP MCP clients |
+| 12 | WebMCP (`navigator.modelContext.registerTool`) | Browser-native agents executing typed page tools |
+
+---
+
+## Package Contents
+
+```text
+agent-readiness-layer/
+├── SKILL.md                          # Agent Skills entry point (YAML frontmatter + 11-phase workflow)
+├── manifest.yaml                     # Structured capability & observability manifest
+├── .claude-plugin/
+│   ├── plugin.json                   # Claude Code plugin descriptor
+│   └── marketplace.json              # Marketplace listing definition
+├── scripts/
+│   └── axo-audit.mjs                 # Zero-dep read-only live AXO auditor (Node 18+)
+├── templates/                        # 24 ready-to-fill AXO deliverable templates
+├── snippets/                         # 14 drop-in HTML, JSON-LD, MCP, A2A, WebMCP & serverless snippets
+├── checklists/                       # 6 structured audit checklists
+├── evals/                            # Cold-agent crawl, sandbox, and hallucination-trap evals
+└── examples/                         # Full reference builds (SaaS/agency, dental clinic, live studio)
+```
+
+---
+
+## Example Prompts Once Installed
+
+- *"Audit `https://mysite.com` with `agent-readiness-layer` and fix the top 5 missing signals."*
+- *"Build a full AXO Agent Readiness Layer (`llms.txt`, `AGENTS.md`, `/.well-known/agent-card.json`, permission model, and evals) for this repo."*
+- *"Design a 6-level permission model and WebMCP tool definitions for our clinic booking flow."*
+
+---
+
+## Built by Bilal Studio
+
+Created and maintained by **[Bilal Studio](https://bilalstudio.io)** — web design, AI interfaces, and agent-ready architecture for modern businesses.
+
+- Want a **done-for-you AXO implementation**, live MCP/WebMCP integration, or AI voice/booking receptionist? Reach out at **[hello@bilalstudio.io](mailto:hello@bilalstudio.io)** or visit **[bilalstudio.io](https://bilalstudio.io)**.
+- Found this useful? Star the repo or open an issue/PR.
