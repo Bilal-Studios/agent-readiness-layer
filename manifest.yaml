@@ -1,13 +1,18 @@
 name: agent-readiness-layer
 kind: skill
-description: Transform any website or business into an AI agent-operable layer — generates llms.txt, tool maps, MCP readiness, permission models, discovery profiles, and evaluation scenarios (AXO).
+description: Transform any website, product, API, or codebase into an AI agent-operable layer — generates Broadcast Protocol v5 discovery (llms.txt, AGENTS.md, A2A agent-card, WebMCP, MCP discovery), permission models, action matrices, evals, and runs a zero-dep live CLI auditor (AXO).
 preconditions:
   - check: "true"
-    description: No technical dependencies — works from a URL, brief, or codebase.
+    description: No required dependencies — works from a URL, brief, or codebase. Node.js 18+ optional for scripts/axo-audit.mjs.
     required: true
 effects:
+  - audits_live_url_axo_score
   - generates_llms_txt
   - generates_llms_full_txt
+  - generates_agents_md
+  - generates_well_known_agent_card
+  - generates_well_known_mcp_discovery
+  - generates_webmcp_browser_tools
   - generates_business_source_of_truth
   - generates_agent_discovery_profile
   - generates_agent_journey_map
@@ -68,12 +73,20 @@ observability:
     - missing_facts_count
     - permission_levels_defined
 metadata:
-  version: 4.0.0
+  version: 5.0.0
+  author: Bilal Studio
+  email: hello@bilalstudio.io
+  homepage: https://bilalstudio.io
+  repository: https://github.com/Bilal-Studios/agent-readiness-layer
   tags:
     - agent-readiness
     - axo
     - llms-txt
+    - agents-md
     - ai-agent
+    - mcp
+    - webmcp
+    - a2a
     - machine-readable
     - agentic-web
     - geo

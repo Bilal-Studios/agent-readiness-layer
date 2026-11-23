@@ -1,0 +1,28 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/mcp-discovery-v1.json",
+  "version": "2025-11-25",
+  "name": "your-business-mcp",
+  "description": "Read-only business facts and approval-gated action tools exposed via Streamable HTTP MCP.",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://example.com/api/mcp"
+  },
+  "authentication": {
+    "readOnlyPublic": true,
+    "writeActions": "oauth2-pkce"
+  },
+  "documentation": {
+    "llmsTxt": "https://example.com/llms.txt",
+    "permissionModel": "https://example.com/docs/permission-model.md",
+    "actionMatrix": "https://example.com/docs/agent-action-matrix.md"
+  },
+  "capabilities": {
+    "resources": true,
+    "tools": true,
+    "prompts": false
+  },
+  "scopes": {
+    "read": ["business:read", "services:read", "faq:read"],
+    "write": ["inquiry:create"]
+  }
+}

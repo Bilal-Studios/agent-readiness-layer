@@ -1,5 +1,23 @@
 # Changelog
 
+## v5.0.0 — Live CLI Auditor, Broadcast Protocol v5 (12 Signals) & Multi-Platform Skill Packaging
+
+### Added
+
+- `scripts/axo-audit.mjs` — zero-dependency, strictly read-only Node 18+ CLI that crawls any live URL across all 12 Broadcast Protocol v5 signals and prints a 0–100 AXO Readiness Score + prioritized fix list (supports `--json`).
+- `snippets/well-known-agent-card.json` — A2A Agent Card template for `/.well-known/agent-card.json` (Signal 10).
+- `snippets/well-known-mcp.json` — Streamable HTTP MCP server discovery template for `/.well-known/mcp.json` (Signal 11).
+- `snippets/webmcp-browser-tools.js` — WebMCP (`navigator.modelContext`) browser-native tool registration with Level 0 read-only vs. Level 2 human-confirmed tool annotations (Signal 12).
+- `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` — native Claude Code plugin & marketplace packaging.
+- Full `agentskills.io` / Agensi.io compliant YAML frontmatter in `SKILL.md` (`name`, `description`, `license`, `compatibility`, `metadata`).
+
+### Refined
+
+- `README.md` rewritten with 1-line install commands (`npx skills add`, Agensi, manual clone), instant CLI quickstart, 12-signal Broadcast Protocol v5 table, and clean maintainer links.
+- `SKILL.md`, `manifest.yaml`, and `ECOSYSTEM_ALIGNMENT.md` aligned to v5.0.0 (A2A, WebMCP, Streamable HTTP MCP, and live verification loop).
+
+---
+
 ## v4 — Broadcast Protocol: Standardized Agentic Web Discovery
 
 ### Problem this solves
